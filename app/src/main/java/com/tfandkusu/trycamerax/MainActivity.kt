@@ -3,6 +3,7 @@ package com.tfandkusu.trycamerax
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.util.Size
 import androidx.camera.core.*
 import com.google.android.material.snackbar.Snackbar
@@ -50,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         // TODO ライト
 
         // 出力先
-        val file = File(filesDir.absolutePath + "/tmp.jpg")
+        val file = File(/*filesDir.absolutePath*/ Environment.getExternalStorageDirectory().absolutePath + "/tmp.jpg")
 
         // 撮影コールバック
         val onImageCaptureListener = object : ImageCapture.OnImageSavedListener {

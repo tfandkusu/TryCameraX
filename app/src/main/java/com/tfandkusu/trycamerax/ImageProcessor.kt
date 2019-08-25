@@ -81,7 +81,6 @@ class ImageProcessor {
             launch(Dispatchers.Main) {
                 listener(bitmap)
             }
-            Log.d("Takada","IP end")
             processing.set(false)
         }
     }
