@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TryCameraX</string>
+    <string name="saved">撮影して保存しました</string>
 </resources>
