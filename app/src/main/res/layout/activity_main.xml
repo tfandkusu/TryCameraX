@@ -18,6 +18,11 @@
             android:id="@+id/take" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginBottom="16dp" app:fabSize="normal"/>
-
+    <ImageView android:layout_width="128dp" android:layout_height="128dp"
+               android:id="@+id/image"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               android:layout_marginTop="16dp"
+               android:layout_marginEnd="16dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

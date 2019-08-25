@@ -3,8 +3,6 @@ package com.tfandkusu.trycamerax
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Looper
-import android.util.Log
 import android.util.Size
 import androidx.camera.core.*
 import com.google.android.material.snackbar.Snackbar
@@ -15,6 +13,8 @@ import kotlinx.coroutines.launch
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
+
+    private val ip = ImageProcessor()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +38,7 @@ class MainActivity : AppCompatActivity() {
         val imageAnalysis = ImageAnalysis(imageAnalysisConfig)
         imageAnalysis.setAnalyzer { image, rotationDegree ->
             // 実はメインスレッド
-            Log.d("Takada", "rotationDegree = " + rotationDegree)
-            Log.d("Takada", "size = " + image.width + " " + image.height)
+            ip.process(image, rotationDegree)
         }
 
         // プレビューの出力先をTextureViewに設定
@@ -68,6 +67,10 @@ class MainActivity : AppCompatActivity() {
         take.setOnClickListener {
             imageCapture.takePicture(file, onImageCaptureListener)
         }
+        // 画像処理結果表示
+        ip.listener = { bitmap ->
+            image.setImageBitmap(bitmap)
+        }
     }
 
     private fun checkFile(file: File) {
@@ -78,7 +81,7 @@ class MainActivity : AppCompatActivity() {
             val message = "%d %d".format(options.outWidth, options.outHeight)
             Snackbar.make(root, message, Snackbar.LENGTH_SHORT).show()
         }
-
     }
+
 
 }
