@@ -1,8 +1,10 @@
 package com.tfandkusu.trycamerax
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Handler
+import android.util.Size
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -52,6 +54,8 @@ class MainActivity : AppCompatActivity() {
         preview.setSurfaceProvider(previewView.surfaceProvider)
         val imageCapture = ImageCapture.Builder()
             .setTargetRotation(previewView.display.rotation)
+            // 回転後の解像度を設定する
+            .setTargetResolution(Size(1440, 2560))
             .build()
         cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture)
 
@@ -86,7 +90,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun showBitmap(bitmap: Bitmap) {
+        text.text = "size = (%d,%d)".format(bitmap.width, bitmap.height)
         image.setImageBitmap(bitmap)
     }
 
