@@ -1,18 +1,8 @@
 package com.tfandkusu.trycamerax
 
 import android.graphics.Bitmap
-import android.util.Log
 import androidx.camera.core.ImageProxy
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import org.opencv.android.Utils
-import org.opencv.core.CvType
-import org.opencv.core.Mat
 import java.util.concurrent.atomic.AtomicBoolean
-import org.opencv.imgproc.Imgproc
-import org.opencv.core.CvType.CV_8UC1
-import kotlin.math.max
 
 
 /**
@@ -61,28 +51,28 @@ class ImageProcessor {
         uBuffer.get(nv21, ySize + vSize, uSize)
         val width = image.width
         val height = image.height
-        GlobalScope.launch {
-            // OpenCVでBGRに変換
-            val yuv = Mat(height + height / 2, width, CV_8UC1)
-            yuv.put(0, 0, nv21)
-            val bgr = Mat()
-            Imgproc.cvtColor(yuv, bgr, Imgproc.COLOR_YUV2BGR_NV21)
-            // サイズを縮小する
-            val maxSize = max(bgr.cols(), bgr.rows())
-            val shrink = Mat(bgr.rows() * 640 / maxSize, bgr.cols() * 640 / maxSize, CvType.CV_8UC3)
-            Imgproc.resize(bgr, shrink, shrink.size())
-            // TODO 回転する
-
-            // rgbaに変換する
-            val rgba = Mat(shrink.rows(), shrink.cols(), CvType.CV_8UC4)
-            Imgproc.cvtColor(shrink, rgba, Imgproc.COLOR_BGR2RGBA)
-            val bitmap = Bitmap.createBitmap(rgba.cols(), rgba.rows(), Bitmap.Config.ARGB_8888)
-            Utils.matToBitmap(rgba, bitmap)
-            launch(Dispatchers.Main) {
-                listener(bitmap)
-            }
-            processing.set(false)
-        }
+//        GlobalScope.launch {
+//            // OpenCVでBGRに変換
+//            val yuv = Mat(height + height / 2, width, CV_8UC1)
+//            yuv.put(0, 0, nv21)
+//            val bgr = Mat()
+//            Imgproc.cvtColor(yuv, bgr, Imgproc.COLOR_YUV2BGR_NV21)
+//            // サイズを縮小する
+//            val maxSize = max(bgr.cols(), bgr.rows())
+//            val shrink = Mat(bgr.rows() * 640 / maxSize, bgr.cols() * 640 / maxSize, CvType.CV_8UC3)
+//            Imgproc.resize(bgr, shrink, shrink.size())
+//            // TODO 回転する
+//
+//            // rgbaに変換する
+//            val rgba = Mat(shrink.rows(), shrink.cols(), CvType.CV_8UC4)
+//            Imgproc.cvtColor(shrink, rgba, Imgproc.COLOR_BGR2RGBA)
+//            val bitmap = Bitmap.createBitmap(rgba.cols(), rgba.rows(), Bitmap.Config.ARGB_8888)
+//            Utils.matToBitmap(rgba, bitmap)
+//            launch(Dispatchers.Main) {
+//                listener(bitmap)
+//            }
+//            processing.set(false)
+//        }
     }
 
 }
